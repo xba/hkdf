@@ -8,6 +8,10 @@ import (
 )
 
 func extract(h func() hash.Hash, salt, ikm []byte) []byte {
+	if salt == nil {
+		// TODO: use HashLen instead of 20
+		salt = bytes.Repeat([]byte{0x00}, 20)
+	}
 	f := hmac.New(h, salt)
 	f.Write(ikm)
 	return f.Sum(nil)

@@ -30,6 +30,18 @@ func TestHKDF(t *testing.T) {
 	}
 }
 
+func BenchmarkHKDF(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		HKDF(
+			sha256.New,
+			[]byte{0x0b, 0x0b, 0x0b, 0x0b, 0x0b, 0x0b},
+			[]byte{0x01, 0x02, 0x03, 0x04, 0x05, 0x06},
+			[]byte{0x00, 0x01, 0x02, 0x03, 0x04, 0x05},
+			42,
+		)
+	}
+}
+
 var TestCases = []TestCase{
 	{
 		Hasher: sha256.New,
